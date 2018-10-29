@@ -53,7 +53,7 @@ plotNetwork<-function(keyword,k,topTerms){
   library(wordcloud)
   set.seed(42)
   #.add color
-  wordCloud<-wordcloud(names(freq),freq,min.freq=20),colors=brewer.pal(6,'Dark2'))
+  wordCloud<-wordcloud(names(freq),freq,min.freq=20,colors=brewer.pal(6,'Dark2'))
   wf=data.frame(term=names(freq),occurrences=freq)
   library(ggplot2)
   p <- ggplot(subset(wf, freq>50), aes(term, occurrences))
