@@ -1,16 +1,14 @@
 plotNetwork<-function(keyword,k,topTerms){
   library(rvest)
   library(tm)
-  url <-paste("https://www.politico.com/search?adv=true&userInitiated=true&s=&q=",keyword,"&pv=&c=0000014b-324d-d4f3-a3cb-f3ff415e0035&r=&start=&start_submit=&end=&end_submit=",sep="")
-  webpage <- read_html(url)
-  nodeTxt<-'.story-text p'
-  nodeSum<-'.fig-graphic a , .lazy-loaded'
+  library(SnowballC)
+  url1<-paste('https://en.wikipedia.org/w/index.php?search=',keyword,'&title=Special%3ASearch&profile=default&fulltext=1',sep='')
+  webpage <- read_html(url1)
+  nodeSum<-'.mw-search-result:nth-child(1) a'
   hyperLink<-webpage %>% html_nodes(nodeSum) %>% html_attr("href")
-  txt<-c()
-  for (i in 1:length(hyperLink)){
-    article <- read_html(hyperLink[i])
-    txt[i]<-paste(html_text(html_nodes(article,nodeTxt)), collapse = '')
-  }
+  article <- read_html(paste('https://en.wikipedia.org',hyperLink,sep=""))
+  nodeTxt<-'p'
+  txt<-paste(html_text(html_nodes(article,nodeTxt)), collapse = '')
   docs <- Corpus(VectorSource(txt))
   #Remove punctuation - replace punctuation marks with " "
   docs <- tm_map(docs, removePunctuation)
@@ -23,7 +21,6 @@ plotNetwork<-function(keyword,k,topTerms){
   #Strip whitespace (cosmetic?)
   docs <- tm_map(docs, stripWhitespace)
   #Stem document to ensure words that have same meaning or different verb forms of the same word arent duplicated 
-  docs <- tm_map(docs,stemDocument)
   #define and eliminate all custom stopwords
   myStopwords <- c("'s","'t",'can', 'say','one','way','use',
                    'also','howev','tell','will',
@@ -84,6 +81,5 @@ plotNetwork<-function(keyword,k,topTerms){
   return(list(wordCloud,p,ldaOut.terms))
   
 }
-
 
 
