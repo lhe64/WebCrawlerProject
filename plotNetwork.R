@@ -1,7 +1,8 @@
-plotNetwork<-function(keyword,k,topTerms){
+plotNetwork<-function(keyword,topTerms){
   library(rvest)
   library(tm)
   library(SnowballC)
+  k<-2
   url1<-paste('https://en.wikipedia.org/w/index.php?search=',keyword,'&title=Special%3ASearch&profile=default&fulltext=1',sep='')
   webpage <- read_html(url1)
   nodeSum<-'.mw-search-result:nth-child(1) a'
@@ -22,7 +23,7 @@ plotNetwork<-function(keyword,k,topTerms){
   docs <- tm_map(docs, stripWhitespace)
   #Stem document to ensure words that have same meaning or different verb forms of the same word arent duplicated 
   #define and eliminate all custom stopwords
-  myStopwords <- c("'s","'t",'can', 'say','one','way','use',
+  myStopwords <- c("'s",keyword, "'t",'can', 'say','one','way','use',
                    'also','howev','tell','will',
                    'much','need','take','tend','even',
                    'like','particular','rather','said',
@@ -38,7 +39,7 @@ plotNetwork<-function(keyword,k,topTerms){
                    'last','never','brief','bit','entir','brief',
                    'great','lot')
   docs <- tm_map(docs, removeWords, myStopwords)
-
+  
   #Create document-term matrix
   dtm <- DocumentTermMatrix(docs)
   
@@ -78,7 +79,38 @@ plotNetwork<-function(keyword,k,topTerms){
   
   #top 10 terms in each topic
   ldaOut.terms <- as.matrix(terms(ldaOut,topTerms))
-  return(list(wordCloud,p,ldaOut.terms))
+  ldaOut.terms
+  topicnodes<-c("topic1","topic2",c(rbind(ldaOut.terms[,1],ldaOut.terms[,2])))
+  topicnodes
+  links<-cbind(c("topic1","topic2"),topicnodes)
+  links[1,1]<-keyword
+  links[2,1]<-keyword
+  nodes<-c(keyword,topicnodes)
+  library("visNetwork") 
+  vis.nodes<-as.data.frame(nodes)
+  colnames(vis.nodes) = c("id")
+  vis.nodes$shape  <- "dot"  
+  vis.nodes$shadow <- TRUE # Nodes will drop shadow
+  vis.nodes$title  <- vis.nodes$id # Text on click
+  vis.nodes$label  <- vis.nodes$id # Node label
+  #vis.nodes$size   <- vis.nodes$audience.size # Node size
+  vis.nodes$borderWidth <- 2 # Node border width
+  #vis.nodes$color.background <- c("slategrey", "tomato", "gold")[nodes$media.type]
+  vis.nodes$color.border <- "black"
+  vis.nodes$color.highlight.background <- "orange"
+  vis.nodes$color.highlight.border <- "darkred"
+  vis.links<-as.data.frame(links)
+  colnames(vis.links) = c("from","to")
+  #vis.links$width <- 1+links$weight/8 # line width
+  vis.links$color <- "gray"    # line color  
+  vis.links$arrows <- "middle" # arrows: 'from', 'to', or 'middle'
+  vis.links$smooth <- FALSE    # should the edges be curved?
+  vis.links$shadow <- FALSE    # edge shadow
+  networkgraph<-visNetwork(vis.nodes,vis.links, width="100%", height="400px")
+  #topicProbabilities <- as.data.frame(ldaOut@gamma)
+  #topicProbabilities
+  #lapply(1:nrow(dtm),function(x) sort(topicProbabilities[x,])[k]/sort(topicProbabilities[x,])[k-1])
+  return(networkgraph)
   
 }
 

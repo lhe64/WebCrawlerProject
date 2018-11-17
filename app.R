@@ -1,8 +1,7 @@
 library(shiny)
-
+library(visNetwork)
 ui <- fluidPage(
   textInput(inputId = "keyword",label<-"keyword",value<-"car"),
-  numericInput(inputId = "numOftopics",label<-"number of topics",value<-2),
   numericInput(inputId = "topTerms",label<-"number of top words",value<-10),
   numericInput(inputId = "minFreq",label<-"minimum frequency of words",value<-10),
   submitButton("Update View", icon("refresh")),
@@ -10,14 +9,14 @@ ui <- fluidPage(
            "the output below update to reflect the value you",
           "entered at the top:"),
   plotOutput("cloud"),
-  tableOutput("network")
+  visNetworkOutput("network",width = "100%", height = "auto")
 )
 
 server <- function(input, output) {
   
   output$cloud <- renderPlot(processWordcloud(input$keyword,input$minFreq))
 
-  output$network <- renderTable(plotNetwork(input$keyword,input$numOftopics,input$topTerms)[3])
+  output$network <-  renderVisNetwork(plotNetwork(input$keyword,input$topTerms))
 }
 
 shinyApp(ui = ui, server = server)
