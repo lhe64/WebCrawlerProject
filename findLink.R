@@ -28,7 +28,7 @@ docs <- tm_map(docs, removeWords, stopwords("english"))
 docs <- tm_map(docs, stripWhitespace)
 #Stem document to ensure words that have same meaning or different verb forms of the same word arent duplicated 
 #define and eliminate all custom stopwords
-myStopwords <- c("'s",keyword, "'t",'can', 'say','one','way','use',
+myStopwords <- c("'s",keyword, "'t",'used','can', 'say','one','way','use',
                  'also','howev','tell','will',
                  'much','need','take','tend','even',
                  'like','particular','rather','said',
