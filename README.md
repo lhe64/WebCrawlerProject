@@ -4,3 +4,7 @@ Webscraping the data from the Internet and using Topic modeling to find the rele
 I chose https://en.wikipedia.org as the website for web scraping. And by searching the keyword, the website will return a list of the results. The top result is used as input to the Topic Modeling.
 
 The result returned from the Topic Modeling will be used as keyword input for the next search. Finally, the result will be visualized by the network nodes and links.
+
+We have two keyword input, and the final visualization will be a graph of connected network of two keywords if a path is find after the iteration times. If not, then it will be two connected network.
+
+For example, "car" and "steel" are not connected if we set iteration =1 and links=2. It is two networks. But "car" and "fire" with the same parameter will be connected.
