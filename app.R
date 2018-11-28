@@ -1,9 +1,10 @@
 library(shiny)
 library(visNetwork)
 ui <- fluidPage(
-  textInput(inputId = "keyword",label<-"keyword",value<-"car"),
-  numericInput(inputId = "topTerms",label<-"number of top links",value<-2),
-  numericInput(inputId = "iterTimes",label<-"iteration times",value<-2),
+  textInput(inputId = "keyword1",label<-"keyword1",value<-"car"),
+  textInput(inputId = "keyword2",label<-"keyword2",value<-"steel"),
+  numericInput(inputId = "topTerms",label<-"number of top links x2",value<-2),
+  numericInput(inputId = "iterTimes",label<-"iteration times",value<-1),
   submitButton("Update View", icon("refresh")),
   helpText("When you click the button above, you should see",
            "the output below update to reflect the value you",
@@ -14,7 +15,7 @@ ui <- fluidPage(
 server <- function(input, output) {
   
 
-  output$network <-  renderVisNetwork(searchTopic(input$keyword,input$topTerms,input$iterTimes))
+  output$network <-  renderVisNetwork(connectTopic(input$keyword1,input$keyword2,input$topTerms,input$iterTimes))
 }
 
 shinyApp(ui = ui, server = server)
