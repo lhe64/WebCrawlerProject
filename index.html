@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+      {{headContent()}}
+      {{bootstrapLib()}}
+      
+        <title>Smart Web Crawler</title>
+        <style>
+            #mast{
+                width:100%;
+                background: #1864a1;
+                height:auto;
+                margin-top:20px;
+                position:fixed;
+            }
+            #nav ul{
+                list-style: none;
+                margin: 0 auto;
+                display:block;
+            } 
+            #nav li{
+                float:right;
+                padding:0 10px;
+                margin: 2px;
+                background-color: black;
+            }
+            #nav li a{
+                text-decoration: none;
+                font-size: :1cm;
+                color:white;
+                
+            }
+            #nav li a:hover{
+                color:lightblue;
+            }
+            h1{
+                color:darkblue;
+                text-align: center;
+                font-family: Verdana
+            }
+            h3{
+                color:darkblue;
+                text-align: center;
+                font-family: Verdana
+            }
+            .picture{
+                text-align:center;
+            }
+            section{
+                color: black;
+                text-align: center;
+                font-family: verdana;
+                font-size: 12px;
+                
+            }
+          </style>
+      </head>
+    <body>
+        <header id="mast">
+            <div>
+                <nav id="nav">
+                    <ul>
+                        <li><a href="https://github.com/lhe64/WebCrawlerProject" target="_blank">Github</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#home">Home</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+            <div id="home">
+              <br>
+              <br>
+              <h1>SMART WEB CRAWLER</h1>
+              <h3>Crawl The Web With Style</h3>
+              <br>
+              <picture style="text-align:center">
+                <p>Sponsored by:</p>
+                <p style="text-align:center;"><img src= "DirectSupply.png" width='150px'></p>
+                <p style="text-align:center;"><img src= "Marquette2.png" width='150px'></p>
+            </picture>
+            </div>
+           
+
+        <section>
+            <div class="wrap">
+            <p>When you click the "update view" button, you should see the output below the values you entered in the fields</p>
+            </div>
+        </section>
+        <div>
+            <div align= "center">
+              {{text1}}
+              {{text2}}
+              {{numeric1}}
+              {{numeric2}}
+              {{submit1}}
+              {{network1}}
+            </div>
+          </div>
+        <section id="about" class=section>
+            <div class="wrap">
+            <p>This was a class project for MSCS 6050: Elemnents of Software Development at Marquette University.  The idea of building a Smart Web Crawler was originally concieved by the staff of Direct Supply.  The original goal was to be able to use the R programming language to scrape the web given two or more topics and be able to connect them through a topic modeling algorithm. Currently, we are hitting directly upon the Wikipedia website to return a list of topics relevant to the initial input words.</p>
+            </div>
+        </section>
+        <section id="section3" class=section>
+            <div class="wrap">
+            <p>
+                
+            </p>
+            </div>
+        </section>
+        <footer>
+            <div>
+            
+            </div>
+        </footer>
+    <script>
+        
+    </script>
+        
+    </body>
+    
+</html>
